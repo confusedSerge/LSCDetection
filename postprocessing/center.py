@@ -36,9 +36,11 @@ def main():
 
     # Load matrices and rows
     try:
-        space = Space(matrixPath, format='npz')   
+        space = Space(matrixPath, format='npz')
+        _format_flag = 'npz'
     except ValueError:
-        space = Space(matrixPath, format='w2v')   
+        space = Space(matrixPath, format='w2v')
+        _format_flag = 'w2v'
 
     if is_len:
         # L2-normalize vectors
@@ -48,7 +50,7 @@ def main():
     space.mean_center()
         
     # Save the matrix
-    space.save(outPath)
+    space.save(outPath, format=_format_flag)
 
     logging.info("--- %s seconds ---" % (time.time() - start_time))                   
 

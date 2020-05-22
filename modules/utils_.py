@@ -1,7 +1,9 @@
 import pickle
 from scipy.sparse import csr_matrix, load_npz, save_npz, spdiags, linalg
+from sklearn.decomposition import PCA
 import numpy as np
 import logging
+import copy
 
 class Space(object):
     """
@@ -174,7 +176,30 @@ class Space(object):
         '''
         avg = np.mean(self.matrix, axis = 0)
         self.matrix = csr_matrix(self.matrix - avg)
-        
+
+    def ppa(self, threshold: int):
+        """
+        """
+        pca = PCA(n_components=threshold)
+
+        mean_matrix = csr_matrix(self.matrix - np.mean(self.matrix, axis=0))
+
+        pca.fit_transform(mean_matrix.toarray())
+        pca_components = csr_matrix(pca.components_)
+
+        _sum = csr_matrix(csr_matrix(self.matrix * pca_components.transpose()) * pca_components)
+        self.matrix = csr_matrix(mean_matrix - _sum)
+
+    def algo_n(self, new_dim: int, threshold: int):
+        """
+        """
+        self.ppa(threshold)
+
+        pca = PCA(n_components=new_dim)
+        self.matrix = csr_matrix(pca.fit_transform(self.matrix.toarray()))
+
+        self.ppa(threshold)
+
 
 def array_to_csr_diagonal(array_):
     #array_ can't be a sparse matrix, if it is dense, it has to be a row matrix
