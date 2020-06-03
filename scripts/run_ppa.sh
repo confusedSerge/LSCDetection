@@ -12,10 +12,10 @@ mkdir -p "test_out/ppa"
 for ((c=$threshold_min; c<=$threshold_max; c++))
 do
   outfile=test_out/ppa/ppa_$out_name\_$c
-  py postprocessing/ppa.py $matrix $outfile $c
+  python3.7 postprocessing/ppa.py $matrix $outfile $c
 
-  py measures/cd.py $targets $outfile $outfile $outfileCD
-  output=$(py evaluation/spr.py $outfileCD $gold $matrix gold 1 0 | grep "gold")
+  python3.7 measures/cd.py $targets $outfile $outfile $outfileCD
+  output=$(python3.7 evaluation/spr.py $outfileCD $gold $matrix gold 1 0 | grep "gold")
 
   IFS=$'\t' read -ra my_array <<< $output
 

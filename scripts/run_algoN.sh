@@ -15,10 +15,10 @@ do
   for ((j= $dim_red_min; j<=$dim_red_max; j++))
   do
     outfile=test_out/algo_n/algo_n_$i\_$j
-    py postprocessing/algo_n.py $matrix $outfile $i $j
+    python3.7 postprocessing/algo_n.py $matrix $outfile $i $j
 
-    py measures/cd.py $targets $outfile $outfile $outfileCD
-    output=$(py evaluation/spr.py $outfileCD $gold $matrix gold 1 0 | grep "gold")
+    python3.7 measures/cd.py $targets $outfile $outfile $outfileCD
+    output=$(python3.7 evaluation/spr.py $outfileCD $gold $matrix gold 1 0 | grep "gold")
 
     IFS=$'\t' read -ra my_array <<< $output
 
