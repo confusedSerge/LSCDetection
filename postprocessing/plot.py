@@ -18,7 +18,7 @@ def main():
 
 
     Usage:
-        plot.py [-d] <file_path> <base_perf> <out_path>
+        plot.py [-d] [-s] <file_path> <base_perf> <out_path>
 
     Arguments:
         <file_path> = path to data_points
@@ -27,9 +27,11 @@ def main():
         
     Options:
         -d, --3Dim  if 3-D data points
+        -s, --scater  if scaterplot should be used
     """)
 
     is_three_dim = args['--3Dim']
+    is_scater = args['--scater']
     file_path = args['<file_path>']
     base_perf = float(args['<base_perf>'])
     out_path = args['<out_path>']
@@ -38,7 +40,7 @@ def main():
     tuples = [tuple(x) for x in df.values]
 
     if is_three_dim:
-        plt_3d(tuples, base_perf)
+        plt_3d(tuples, base_perf, is_scater)
     else:
         plt_2d(tuples, base_perf)
 
@@ -53,18 +55,20 @@ def plt_2d(tuples, base_perf):
     plt.show()
 
 
-def plt_3d(tuples, base_perf):
+def plt_3d(tuples, base_perf, is_scater):
     X, Y, Z, base_Z = _gen_data(tuples, base_perf)
 
     fig = plt.figure()
     ax = fig.gca(projection='3d')
 
-    # ax.scatter3D(*zip(*tuples), color='black')
-    # ax.plot_wireframe(X, Y, Z, color='black')
-    # ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
-    #                 cmap='viridis', edgecolor='none')
-    ax.contour3D(X, Y, Z, 50, cmap='viridis')
-    ax.plot_wireframe(X, Y, base_Z, color='black')
+    if is_scater:
+        ax.scatter3D(*zip(*tuples), color='black')
+    else:
+        # ax.plot_wireframe(X, Y, Z, color='black')
+        # ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
+        #                 cmap='viridis', edgecolor='none')
+        ax.contour3D(X, Y, Z, 50, cmap='viridis')
+        ax.plot_wireframe(X, Y, base_Z, color='black')
 
     plt.show()
 
@@ -82,11 +86,11 @@ def _gen_data(tuple, base_perf):
             Y = np.append(Y, _Y)
         z = np.append(z, _z)
 
-    Z = np.ndarray((len(X), len(Y)))
-    base_Z = np.ndarray((len(X), len(Y)))
-    for i in range(len(X)):
-        for j in range(len(Y)):
-            Z[i][j] = z[i * len(Y) + j]
+    Z = np.ndarray((len(Y), len(X)))
+    base_Z = np.ndarray((len(Y), len(X)))
+    for i in range(len(Y)):
+        for j in range(len(X)):
+            Z[i][j] = z[i * len(X) + j]
             base_Z[i][j] = base_perf
 
     X, Y = np.meshgrid(X, Y)
