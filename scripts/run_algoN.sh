@@ -4,6 +4,10 @@ threshold_max=$3
 dim_red_min=$4
 dim_red_max=$5
 
+targets=testsets/wordsim/targets.tsv
+gold=testsets/wordsim/gold.tsv
+outfileCD=outfileCD.tsv
+
 mkdir -p "test_out/algo_n"
 
 for ((i= $threshold_min; i<=$threshold_max; i++))
@@ -12,5 +16,12 @@ do
   do
     outfile=test_out/algo_n/algo_n_$i\_$j
     py postprocessing/algo_n.py $matrix $outfile $i $j
+
+    py measures/cd.py $targets $outfile $outfile $outfileCD
+    output=$(py evaluation/spr.py $outfileCD $gold $matrix gold 1 0 | grep "gold")
+
+    IFS=$'\t' read -ra my_array <<< $output
+
+  echo "$i;$j;${my_array[2]}" >> test_out/algo_n/algo_n_results.csv
   done
 done
