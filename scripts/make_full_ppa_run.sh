@@ -1,6 +1,8 @@
-path_to_files=$4
+path_to_files=$1
 
-for file in $path_to_files
+echo "started"
+
+for file in $path_to_files/*
 do
     echo "started with file $file"
     bash -e run_ppa.sh $file 0 25 sdewac_sgns_$file

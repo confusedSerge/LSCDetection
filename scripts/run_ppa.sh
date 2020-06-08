@@ -12,6 +12,8 @@ mkdir -p "test_out/ppa_$out_name"
 for ((c=$threshold_min; c<=$threshold_max; c++))
 do
   outfile=test_out/ppa/ppa_$out_name\_$c
+  echo "$outfile"
+  
   python3.7 postprocessing/ppa.py $matrix $outfile $c
 
   python3.7 measures/cd.py $targets $outfile $outfile $outfileCD
