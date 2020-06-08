@@ -7,7 +7,7 @@ targets=testsets/wordsim/targets.tsv
 gold=testsets/wordsim/gold.tsv
 outfileCD=outfileCD.tsv
 
-mkdir -p "test_out/ppa"
+mkdir -p "test_out/ppa_$out_name"
 
 for ((c=$threshold_min; c<=$threshold_max; c++))
 do
@@ -19,5 +19,5 @@ do
 
   IFS=$'\t' read -ra my_array <<< $output
 
-  echo "$c;${my_array[2]}" >> test_out/ppa/ppa_results.csv
+  echo "$c;${my_array[2]}" >> test_out/ppa_$out_name/ppa_results.csv
 done
