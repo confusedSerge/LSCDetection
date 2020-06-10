@@ -1,7 +1,7 @@
 path_to_files=$1
 out_name=$2
 
-gold=testsets/wordsim/gold.tsv
+gold=testsets/wordsim/all.tsv
 freq=testsets/wordsim/freqs.tsv
 
 # mkdir -p "test_out/ts_$out_name"
