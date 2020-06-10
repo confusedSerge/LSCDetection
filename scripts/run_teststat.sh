@@ -4,12 +4,14 @@ out_name=$2
 gold=testsets/wordsim/all.tsv
 freq=testsets/wordsim/freqs.tsv
 
-# mkdir -p "test_out/ts_$out_name"
+mkdir -p "test_out/ts_results"
 
 for file in $path_to_files/*
 do
     echo "started with file $file"
     output=$(python3.7 evaluation/test_statistik.py $file $gold $freq)
+
+    echo $output
 
     IFS=$'\t' read -ra my_array <<< $output
     
