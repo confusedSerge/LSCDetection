@@ -1,4 +1,4 @@
-matrix_folder_path=$1
+path_to_files=$1
 out_name=$2
 
 gold=testsets/wordsim/gold.tsv
