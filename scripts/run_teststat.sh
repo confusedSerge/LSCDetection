@@ -15,5 +15,5 @@ do
 
     IFS=$'\t' read -ra my_array <<< $output
     
-    echo "${my_array[0]};${my_array[1]};${my_array[3]};${my_array[4]};${my_array[5]}" >> test_out/ts_results/ts_$out_name.csv
+    echo "${my_array[0]};${my_array[1]};${my_array[2]};${my_array[3]};${my_array[4]};${my_array[5]}" >> test_out/ts_results/ts_$out_name.csv
 done
