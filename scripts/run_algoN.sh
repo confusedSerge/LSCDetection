@@ -11,7 +11,7 @@ do
   for ((j= $dim_red_min; j<=$dim_red_max; j++))
   do
     mkdir -p "test_out/algo_n/algo_n_${matrix##*/}"
-    outfile=test_out/algo_n/algo_n_${matrix##*/}/algo_n_${matrix##*/}\_$i\_$j
+    outfile=test_out/algo_n/algo_n_${matrix##*/}/algo_n_${matrix##*/}\_thresh$i\_dim$j
 
     echo "started with ${matrix##*/} and values thresh: $i, dim_red: $j"
     # echo "outfile will be"
