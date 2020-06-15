@@ -10,8 +10,8 @@ do
   do
     for ((j= $dim_red_min; j<=$dim_red_max; j++))
     do
-      mkdir -p "test_out/algo_n_${matrix##*/}"
-      outfile=test_out/algo_n_${matrix##*/}/algo_n_${matrix##*/}\_$i\_$j
+      mkdir -p "test_out/algo_n/algo_n_${matrix##*/}"
+      outfile=test_out/algo_n/algo_n_${matrix##*/}/algo_n_${matrix##*/}\_$i\_$j
 
       echo "started with ${matrix##*/}"
 
