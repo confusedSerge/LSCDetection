@@ -25,7 +25,6 @@ def main():
         <base_perf> = basis performance data point/s
         
     Options:
-        -p, --ppa  if its ppa data
         -c, --comp  if comparison for ppa
     """)
 
@@ -54,7 +53,6 @@ def plt_ppa(_tuple, base_perf, is_comp):
         ax.scatter3D(*zip(*base_perf), color='red')
 
     ax.scatter3D(*zip(*_tuple), color='black')
-    # ax.plot_wireframe(X, Y, base_Z, color='red')
 
     plt.show()
 
