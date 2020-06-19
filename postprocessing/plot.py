@@ -18,67 +18,52 @@ def main():
 
 
     Usage:
-        plot.py [-d] [-s] <file_path> <base_perf> <out_path>
+        plot.py [-c] <file_path> <base_perf> 
 
     Arguments:
         <file_path> = path to data_points
-        <base_perf> = basis performance
-        <out_path> = output for graphic
+        <base_perf> = basis performance data point/s
         
     Options:
-        -d, --3Dim  if 3-D data points
-        -s, --scater  if scaterplot should be used
+        -p, --ppa  if its ppa data
+        -c, --comp  if comparison for ppa
     """)
 
-    is_three_dim = args['--3Dim']
-    is_scater = args['--scater']
     file_path = args['<file_path>']
-    base_perf = float(args['<base_perf>'])
-    out_path = args['<out_path>']
+    base_perf = args['<base_perf>']
 
     df = pd.read_csv(file_path, delimiter=';', header=None)
     tuples = [tuple(x) for x in df.values]
 
-    if is_three_dim:
-        plt_3d(tuples, base_perf, is_scater)
-    else:
-        plt_2d(tuples, base_perf)
+
+    df = pd.read_csv(base_perf, delimiter=';', header=None)
+    base_tupel = [tuple(x) for x in df.values]
+
+    plt_ppa(tuples, base_tupel, args['--comp'])
 
 
-def plt_2d(tuples, base_perf):
-    plt.plot(*zip(*tuples), '-bo')
 
-    x, y = zip(*tuples)
-    y = [base_perf] * len(y)
-    plt.plot(x, y, '-ro')
-
-    plt.show()
-
-
-def plt_3d(tuples, base_perf, is_scater):
-    X, Y, Z, base_Z = _gen_data(tuples, base_perf)
-
+def plt_ppa(_tuple, base_perf, is_comp):
     fig = plt.figure()
     ax = fig.gca(projection='3d')
-
-    if is_scater:
-        ax.scatter3D(*zip(*tuples), color='black')
+    
+    if not is_comp:
+        X, Y, Z, base_Z, scatter_Z = _gen_data(_tuple, base_perf)
+        ax.scatter3D(*zip(*scatter_Z), color='red')
     else:
-        # ax.plot_wireframe(X, Y, Z, color='black')
-        # ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
-        #                 cmap='viridis', edgecolor='none')
-        ax.contour3D(X, Y, Z, 50, cmap='viridis')
-        ax.plot_wireframe(X, Y, base_Z, color='black')
+        ax.scatter3D(*zip(*base_perf), color='red')
+
+    ax.scatter3D(*zip(*_tuple), color='black')
+    # ax.plot_wireframe(X, Y, base_Z, color='red')
 
     plt.show()
 
-
-def _gen_data(tuple, base_perf):
+def _gen_data(_tuple, base_perf):
     X = np.array([])
     Y = np.array([])
     z = np.array([])
 
-    for data_point in tuple:
+    for data_point in _tuple:
         (_X, _Y, _z) = data_point
         if _X not in X:
             X = np.append(X, _X)
@@ -87,14 +72,16 @@ def _gen_data(tuple, base_perf):
         z = np.append(z, _z)
 
     Z = np.ndarray((len(Y), len(X)))
+    scatter_Z = []
     base_Z = np.ndarray((len(Y), len(X)))
     for i in range(len(Y)):
         for j in range(len(X)):
             Z[i][j] = z[i * len(X) + j]
-            base_Z[i][j] = base_perf
+            base_Z[i][j] = base_perf[j][2]
+            scatter_Z.append((X[j], Y[i], base_perf[j][2]))
 
     X, Y = np.meshgrid(X, Y)
-    return X, Y, Z, base_Z
+    return X, Y, Z, base_Z, scatter_Z
 
 
 if __name__ == '__main__':
