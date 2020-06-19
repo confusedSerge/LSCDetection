@@ -28,7 +28,7 @@ def main():
         -c, --comp  if comparison for ppa
     """)
 
-    file_path = args['<file_path>']
+    file_path = args['<file_path>'] 
     base_perf = args['<base_perf>']
 
     df = pd.read_csv(file_path, delimiter=';', header=None)
