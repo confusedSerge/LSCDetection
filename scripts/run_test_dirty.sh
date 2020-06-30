@@ -8,7 +8,7 @@ echo " $matrix_path_one" >> test_out/ppa/ppa_results.csv
 for i in {0..25} 
 do
     echo "$matrix_path_one$i"
-    output=$(python3.7 evaluation/subtask2.py $matrix_path_one$i $matrix_path_two$i $gold_path | grep "test_out/ppa_corp1_diachron_win5_dim300_ep5.model.pretrain_sgns_OP/ppa_corp1_diachron_win5_dim300_ep5.model.pretrain_sgns_OP_$i")
+    output=$(python3.7 evaluation/subtask2.py $matrix_path_one$i $matrix_path_two$i $gold_path | grep "test_out/ppa_ppa_diachron_2-win5-dim300-ep5.model.pretrain_sgns_OP_/ppa_corp1_diachron_win5_dim300_ep5.model.pretrain_sgns_OP_$i")
 
     IFS=$'\t' read -ra my_array <<< $output
 
