@@ -10,5 +10,6 @@ do
 
     IFS=$'\t' read -ra my_array <<< $output
 
+    echo "Stats: 300;$i;${my_array[1]}"
     echo "300;$i;${my_array[1]}" >> test_out/ppa/ppa_results.csv
 done

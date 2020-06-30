@@ -8,5 +8,5 @@ sed -i 1d $matrix_one
 
 while IFS= read -r line
 do
-echo "_$line" >> $matrix_two
+    echo "_$line" >> $matrix_two
 done < "$matrix_one"
