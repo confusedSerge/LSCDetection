@@ -18,14 +18,16 @@ def main():
 
 
     Usage:
-        plot.py [-c] <file_path> <base_perf> 
+        plot.py [-c] [-t] <file_path> <base_perf> <third_optional>
 
     Arguments:
         <file_path> = path to data_points
         <base_perf> = basis performance data point/s
+        <third_optional> = optional
         
     Options:
         -c, --comp  if comparison for ppa
+        -t, --three  if three datapoints
     """)
 
     file_path = args['<file_path>'] 
@@ -38,7 +40,13 @@ def main():
     df = pd.read_csv(base_perf, delimiter=';', header=None)
     base_tupel = [tuple(x) for x in df.values]
 
-    plt_ppa(tuples, base_tupel, args['--comp'])
+    if args['--three']:
+        df = pd.read_csv(args['<third_optional>'], delimiter=';', header=None)
+        _third = [tuple(x) for x in df.values]
+
+        plt_ppa_three_fig(tuples, base_tupel, _third)
+    else:
+        plt_ppa(tuples, base_tupel, args['--comp'])
 
 
 
@@ -55,6 +63,17 @@ def plt_ppa(_tuple, base_perf, is_comp):
     ax.scatter3D(*zip(*_tuple), color='black')
 
     plt.show()
+
+def plt_ppa_three_fig(_first, _sec, _thrid): 
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+
+    ax.scatter3D(*zip(*_first), color='r')
+    ax.scatter3D(*zip(*_sec), color='g')
+    ax.scatter3D(*zip(*_thrid), color='b')
+
+    plt.show()
+
 
 def _gen_data(_tuple, base_perf):
     X = np.array([])
