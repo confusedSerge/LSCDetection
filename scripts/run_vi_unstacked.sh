@@ -24,7 +24,7 @@ do
   python3.7 postprocessing/ppa.py $matrix_2 $outfile_ppa_2 $c
   
   output=$(python3.7 evaluation/test_statistik_diachron.py $outfile_ppa_1 $outfile_ppa_2 $task2 $wordsim $freq)
-  echo "$c;$output" >> test_out/vi_unstacked_ppa_$out_name/results_precrust_wi_ppa_$out_name.csv
+  echo "$c;$output" >> test_out/vi_unstacked_ppa_$out_name/results_precrust_vi_ppa_$out_name.csv
 
   outfile_ppa_postcrust_1=test_out/vi_unstacked_ppa_$out_name/postcrust/first/vi_ppa_$out_name\_$c
   outfile_ppa_postcrust_2=test_out/vi_unstacked_ppa_$out_name/postcrust/sec/vi_ppa_$out_name\_$c
@@ -32,5 +32,5 @@ do
   python3.7 alignment/map_embeddings.py --normalize unit center --init_identical --orthogonal $outfile_ppa_1 $outfile_ppa_2 $outfile_ppa_postcrust_1 $outfile_ppa_postcrust_2
 
   output=$(python3.7 evaluation/test_statistik_diachron.py $outfile_ppa_postcrust_1 $outfile_ppa_postcrust_2 $task2 $wordsim $freq)
-  echo "$c;$output" >> test_out/vi_unstacked_ppa_$out_name/results_postcrust_wi_ppa_$out_name.csv
+  echo "$c;$output" >> test_out/vi_unstacked_ppa_$out_name/results_postcrust_vi_ppa_$out_name.csv
 done
