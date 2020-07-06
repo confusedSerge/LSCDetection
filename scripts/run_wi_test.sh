@@ -15,5 +15,5 @@ do
 
   python3.7 postprocessing/ppa.py $matrix $outfile_ppa $c
   output=$(python3.7 evaluation/test_statistik_diachron.py $outfile_ppa $outfile_ppa $task2 $wordsim $freq)
-  echo "c;$output" >> test_out/wi_ppa_$out_name/results_wi_ppa_$out_name.csv
+  echo "$c;$output" >> test_out/wi_ppa_$out_name/results_wi_ppa_$out_name.csv
 done
