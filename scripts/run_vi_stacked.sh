@@ -24,19 +24,24 @@ do
   output=$(python3.7 evaluation/test_statistik_diachron.py $outfile_ppa $outfile_ppa $task2 $wordsim $freq)
   echo "$c;$output" >> test_out/vi_stacked_ppa_$out_name/results_precrust_vi_ppa_$out_name.csv
 
-  outfile_ppa_postcrust=test_out/vi_stacked_ppa_$out_name/postcrust/vi_ppa_$out_name\_$c
-  bash -e scripts/make_unconc.sh $outfile_ppa $outfile_ppa_postcrust\_1 $outfile_ppa_postcrust\_2
+  postcrust_first=test_out/vi_stacked_ppa_$out_name/postcrust/vi_ppa_$out_name\_$c\_first
+  postcrust_sec=test_out/vi_stacked_ppa_$out_name/postcrust/vi_ppa_$out_name\_$c\_sec
 
-  python3.7 alignment/map_embeddings.py --normalize unit center --init_identical --orthogonal $outfile_ppa_postcrust\_1 $outfile_ppa_postcrust\_2 $outfile_ppa_postcrust\_1u $outfile_ppa_postcrust\_2u 
+  bash -e scripts/make_unconc.sh $outfile_ppa $postcrust_first $outfile_ppa_postcrust\_2
 
-  output=$(python3.7 evaluation/test_statistik_diachron.py $outfile_ppa_postcrust\_1u $outfile_ppa_postcrust\_2u $task2 $wordsim $freq)
+  outfile_ppa_postcrust_one=test_out/vi_stacked_ppa_$out_name/postcrust/vi_ppa_$out_name\_$c\_alg_first
+  outfile_ppa_postcrust_two=test_out/vi_stacked_ppa_$out_name/postcrust/vi_ppa_$out_name\_$c\_alg_sec
+  
+  python3.7 alignment/map_embeddings.py --normalize unit center --init_identical --orthogonal $postcrust_first $postcrust_sec $outfile_ppa_postcrust_one $outfile_ppa_postcrust_two 
+
+  output=$(python3.7 evaluation/test_statistik_diachron.py $outfile_ppa_postcrust_one $outfile_ppa_postcrust_two $task2 $wordsim $freq)
   echo "$c;$output" >> test_out/vi_stacked_ppa_$out_name/results_postcrust_vi_ppa_$out_name.csv
 
   rm -f $outfile_ppa
-  rm -f $outfile_ppa_postcrust\_1
-  rm -f $outfile_ppa_postcrust\_2
-  rm -f $outfile_ppa_postcrust\_1u
-  rm -f $outfile_ppa_postcrust\_2u
+  rm -f $postcrust_first
+  rm -f $postcrust_sec
+  rm -f $outfile_ppa_postcrust_one
+  rm -f $outfile_ppa_postcrust_two
 done
 
 rm -f $outfile_stacked
