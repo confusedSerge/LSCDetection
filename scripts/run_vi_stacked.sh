@@ -27,7 +27,7 @@ do
   postcrust_first=test_out/vi_stacked_ppa_$out_name/postcrust/vi_ppa_$out_name\_$c\_first
   postcrust_sec=test_out/vi_stacked_ppa_$out_name/postcrust/vi_ppa_$out_name\_$c\_sec
 
-  bash -e scripts/make_unconc.sh $outfile_ppa $postcrust_first $outfile_ppa_postcrust\_2
+  bash -e scripts/make_unconc.sh $outfile_ppa $postcrust_first $postcrust_sec
 
   outfile_ppa_postcrust_one=test_out/vi_stacked_ppa_$out_name/postcrust/vi_ppa_$out_name\_$c\_alg_first
   outfile_ppa_postcrust_two=test_out/vi_stacked_ppa_$out_name/postcrust/vi_ppa_$out_name\_$c\_alg_sec
