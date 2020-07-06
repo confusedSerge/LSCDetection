@@ -18,10 +18,10 @@ do
   outfile_ppa_2=test_out/vi_unstacked_ppa_$out_name/precrust/sec/vi_ppa_$out_name\_$c
 
   echo "started with $outfile_ppa_1 and D=$c"
-  python3.7 postprocessing/ppa.py $matrix $outfile_ppa_1 $c
+  python3.7 postprocessing/ppa.py $matrix_1 $outfile_ppa_1 $c
 
   echo "started with $outfile_ppa_2 and D=$c"
-  python3.7 postprocessing/ppa.py $matrix $outfile_ppa_2 $c
+  python3.7 postprocessing/ppa.py $matrix_2 $outfile_ppa_2 $c
   
   output=$(python3.7 evaluation/test_statistik_diachron.py $outfile_ppa_1 $outfile_ppa_2 $task2 $wordsim $freq)
   echo "$c;$output" >> test_out/vi_unstacked_ppa_$out_name/results_precrust_wi_ppa_$out_name.csv
