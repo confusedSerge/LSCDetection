@@ -32,10 +32,11 @@ do
   output=$(python3.7 evaluation/test_statistik_diachron.py $outfile_ppa_postcrust\_1u $outfile_ppa_postcrust\_2u $task2 $wordsim $freq)
   echo "$c;$output" >> test_out/vi_stacked_ppa_$out_name/results_postcrust_vi_ppa_$out_name.csv
 
-  rm -f $outfile_stacked
   rm -f $outfile_ppa
   rm -f $outfile_ppa_postcrust\_1
   rm -f $outfile_ppa_postcrust\_2
   rm -f $outfile_ppa_postcrust\_1u
   rm -f $outfile_ppa_postcrust\_2u
 done
+
+rm -f $outfile_stacked
