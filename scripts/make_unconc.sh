@@ -5,8 +5,8 @@ outfile_two=$3
 
 IFS=$' ' read -ra head <<< $(head -n 1 $matrix)
 
-echo "${head[0]} ${head[2]}" >> $outfile_one
-echo "${head[1]} ${head[2]}" >> $outfile_two
+echo "${head[0]} ${head[2]} " >> $outfile_one
+echo "${head[1]} ${head[2]} " >> $outfile_two
 
 ((maxline =${head[0]}+1))
 
