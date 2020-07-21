@@ -35,7 +35,11 @@ def main():
     target_word_file = open(_dict, 'r', encoding='utf-8')
     target_words = []
     for line in target_word_file.readlines():
-        target_words.append(line.strip())
+        in_words = line.strip().split(" ")
+        if in_words[0] not in target_words:
+            target_words.append(in_words[0])
+        if in_words[1] not in target_words:
+            target_words.append(in_words[1])
 
     # generate new header
     matrix = open(input_matrix, 'r', encoding='utf-8')
