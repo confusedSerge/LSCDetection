@@ -6,14 +6,16 @@ language=$4
 task2=testsets/SemEVAL2020/$language/task2.txt
 wordsim=testsets/wordsim/$language/all.tsv
 freq=testsets/SemEVAL2020/$language/frequencies.tsv
+targets=testsets/SemEVAL2020/$language/targets.tsv
+vac=test_src/matrix/$language/vac
 
 mkdir -p "test_out/vi_unstacked_ppa_$out_name"
 
 tmp_file_one=test_out/vi_unstacked_ppa_$out_name/smol_one_$out_name
 tmp_file_two=test_out/vi_unstacked_ppa_$out_name/smol_two_$out_name
 
-python3.7 preprocessing/remove_words.py $matrix_1 $wordsim $tmp_file_one
-python3.7 preprocessing/remove_words.py $matrix_2 $wordsim $tmp_file_two
+python3.7 preprocessing/remove_words.py $matrix_1 $targets $vac $tmp_file_one
+python3.7 preprocessing/remove_words.py $matrix_2 $targets $vac $tmp_file_two
 
 for ((c=0; c<=25; c++))
 do
