@@ -11,7 +11,7 @@ mkdir -p "test_out/wi_ppa_$out_name"
 
 tmp_file=test_out/wi_ppa_$out_name/smol_$out_name
 
-python3.7 preprocessing/remove_words.py $matrix_1 $targets $tmp_file
+python3.7 preprocessing/remove_words.py $matrix $targets $tmp_file
 
 for ((c=0; c<=25; c++))
 do
