@@ -12,7 +12,7 @@ def main():
     args = docopt("""Preprocess matrix
 
     Usage:
-        remove_words.py <input_matrix> <dict> <dict2> <outPath>
+        remove_words.py <input_matrix> <dict1> <dict2> <outPath>
         
     Arguments:
        
