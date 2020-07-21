@@ -1,0 +1,58 @@
+from docopt import docopt
+import logging
+import time
+
+
+def main():
+    """
+    Preprocess corpus (remove low-frequency words, etc.).
+    """
+
+    # Get the arguments
+    args = docopt("""Preprocess matrix
+
+    Usage:
+        preprocess.py <input_matrix> <dict> <outPath>
+        
+    Arguments:
+       
+        <input_matrix> = path to matrix
+        <dict> = file with words to keep
+        <outPath> = output path
+        
+    """)
+
+    input_matrix = args['<input_matrix>']
+    _dict = args['<dict>']
+    out_path = args['<outPath>']
+
+    logging.basicConfig(
+        format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+    logging.info(__file__.upper())
+    start_time = time.time()
+
+    # generate word array
+    target_word_file = open(_dict, 'r', encoding='utf-8')
+    target_words = []
+    for line in target_word_file.readlines():
+        target_words.append(line.strip())
+
+    # Write output
+    matrix = open(input_matrix, 'r', encoding='utf-8')
+    with open(out_path, 'w', encoding='utf-8') as f_out:
+        for line in matrix.readlines():
+            if clean_line(line) in target_words:
+                f_out.write(line)
+
+    logging.info("--- %s seconds ---" % (time.time() - start_time))
+
+
+def clean_line(line: str):
+    word: str = line.strip().split(" ")[0]
+    if word.endswith('_'):
+        return word.rstrip('_')
+    return word
+
+
+if __name__ == '__main__':
+    main()
