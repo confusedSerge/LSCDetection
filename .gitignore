@@ -17,3 +17,4 @@ evaluation/average_results1.sh
 test_out/*
 .vscode
 cmd.txt
+test/

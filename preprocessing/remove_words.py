@@ -37,9 +37,24 @@ def main():
     for line in target_word_file.readlines():
         target_words.append(line.strip())
 
+    # generate new header
+    matrix = open(input_matrix, 'r', encoding='utf-8')
+    header = True
+    head = []
+    for line in matrix.readlines():
+        if header:
+            head = [int(numeric_string) for numeric_string in line.split(" ")]
+            head[0] = 0
+            header = False
+        if clean_line(line) in target_words:
+            head[0] += 1
+
+    head = "{} {}\n".format(*head)
+
     # Write output
     matrix = open(input_matrix, 'r', encoding='utf-8')
     with open(out_path, 'w', encoding='utf-8') as f_out:
+        f_out.write(head)
         for line in matrix.readlines():
             if clean_line(line) in target_words:
                 f_out.write(line)
