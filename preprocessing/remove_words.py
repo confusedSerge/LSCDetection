@@ -12,20 +12,18 @@ def main():
     args = docopt("""Preprocess matrix
 
     Usage:
-        remove_words.py <input_matrix> <dict1> <dict2> <outPath>
+        remove_words.py <input_matrix> <dict> <outPath>
         
     Arguments:
        
         <input_matrix> = path to matrix
-        <dict1> = words from target.tsv
-        <dict2> = words from matrix
+        <dict> = words from target.tsv
         <outPath> = output path
         
     """)
 
     input_matrix = args['<input_matrix>']
-    _dict1 = args['<dict1>']
-    _dict2 = args['<dict2>']
+    _dict = args['<dict>']
     out_path = args['<outPath>']
 
     logging.basicConfig(
@@ -34,18 +32,11 @@ def main():
     start_time = time.time()
 
     # generate word array from targets
-    target_word_file = open(_dict1, 'r', encoding='utf-8')
+    target_word_file = open(_dict, 'r', encoding='utf-8')
     target_words = []
     for line in target_word_file.readlines():
         target_words.append(line.strip())
-
-    # generate word array from matrix
-    target_word_file = open(_dict2, 'r', encoding='utf-8')
-    for line in target_word_file.readlines():
-        in_words = line.strip().split(" ")
-        if in_words[0] not in target_words:
-            target_words.append(in_words[0])
-
+            
     # generate new header
     matrix = open(input_matrix, 'r', encoding='utf-8')
     header = True
