@@ -1,7 +1,7 @@
 matrix=$1
 out_name=$2
 language=$3
-targettsv=$5
+targettsv=$4
 
 task2=testsets/SemEVAL2020/$language/task2.txt
 wordsim=testsets/wordsim/$language/all.tsv
