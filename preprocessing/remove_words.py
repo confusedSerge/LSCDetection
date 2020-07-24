@@ -36,7 +36,7 @@ def main():
     target_words = []
     for line in target_word_file.readlines():
         target_words.append(line.strip())
-            
+
     # generate new header
     matrix = open(input_matrix, 'r', encoding='utf-8')
     header = True
