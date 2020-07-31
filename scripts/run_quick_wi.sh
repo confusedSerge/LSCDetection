@@ -15,7 +15,7 @@ for ((c=0; c<=25; c++))
 do
   outfile_ppa=$out_path/$out_name\_$c
   echo "started with $outfile_ppa and D=$c"
-  python3.7 postprocessing/ppa.py $tmp_file $outfile_ppa $c
+  python3.7 postprocessing/ppa.py $matrix $outfile_ppa $c
   
   output=$(python3.7 evaluation/test_statistik_diachron.py $outfile_ppa $outfile_ppa $task2 $wordsim $freq)
   echo "$c;$output" >> $out_path/results_$out_name.csv
