@@ -18,16 +18,19 @@ def main():
 
 
     Usage:
-        plot.py [-c] [-t] <file_path> <base_perf> <third_optional>
+        plot.py (-z) <file_path> <base_perf> [(-t <third_optional>)] [<title> <name1> <name2>]
 
     Arguments:
         <file_path> = path to data_points
         <base_perf> = basis performance data point/s
         <third_optional> = optional
+        <title> = title 
+        <name1> = first name
+        <name2> = sec name
         
     Options:
-        -c, --comp  if comparison for ppa
         -t, --three  if three datapoints
+        -z, --two  if 2d plot should be made 
     """)
 
     file_path = args['<file_path>'] 
@@ -40,27 +43,30 @@ def main():
     df = pd.read_csv(base_perf, delimiter=';', header=None)
     base_tupel = [tuple(x) for x in df.values]
 
-    if args['--three']:
+    if args['--two']:
+        if args['--three']:
+            df = pd.read_csv(args['<third_optional>'], delimiter=';', header=None)
+            _third = [tuple(x) for x in df.values]
+            plot2dthree(tuples, base_tupel, _third, args["<title>"], args["<name1>"], args["<name2>"])
+        else:
+            plot2d(tuples, base_tupel, args["<title>"], args["<name1>"], args["<name2>"])
+
+    elif args['--three']:
         df = pd.read_csv(args['<third_optional>'], delimiter=';', header=None)
         _third = [tuple(x) for x in df.values]
 
         plt_ppa_three_fig(tuples, base_tupel, _third)
     else:
-        plt_ppa(tuples, base_tupel, args['--comp'])
+        plt_ppa(tuples, base_tupel)
 
 
 
-def plt_ppa(_tuple, base_perf, is_comp):
+def plt_ppa(_tuple, base_perf):
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     
-    if not is_comp:
-        X, Y, Z, base_Z, scatter_Z = _gen_data(_tuple, base_perf)
-        ax.scatter3D(*zip(*scatter_Z), color='red')
-    else:
-        ax.scatter3D(*zip(*base_perf), color='red')
-
-    ax.scatter3D(*zip(*_tuple), color='black')
+    ax.scatter3D(*zip(*base_perf), color='r')
+    ax.scatter3D(*zip(*_tuple), color='g')
 
     plt.show()
 
@@ -74,6 +80,29 @@ def plt_ppa_three_fig(_first, _sec, _thrid):
 
     plt.show()
 
+def plot2d(_first, _sec, title, name1, name2):
+    x, y, z = zip(*_first)
+    x_, y_, z_ = zip(*_sec)
+    
+    plt.plot(y, z, color='c')
+    plt.plot(y_, z_, color='m')
+    # plt.legend()
+    plt.title(title)
+    plt.grid()
+    plt.show()
+
+def plot2dthree(_first, _sec, _third, title, name1, name2):
+    x, y, z = zip(*_first)
+    x_, y_, z_ = zip(*_sec)
+    x__, y__, z__ = zip(*_third)
+    
+    plt.plot(y, z, color='c', label=str(name1))
+    plt.plot(y_, z_, color='m', label=str(name2))
+    plt.plot(y__, z__, color='g', label="baseline")
+    plt.legend()
+    plt.title(title)
+    plt.grid()
+    plt.show()
 
 def _gen_data(_tuple, base_perf):
     X = np.array([])

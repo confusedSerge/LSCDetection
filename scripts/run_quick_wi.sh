@@ -11,7 +11,7 @@ out_path=test_out/$language/$pre_train
 
 mkdir -p $out_path
 
-for ((c=0; c<=25; c++))
+for ((c=0; c<=10; c++))
 do
   outfile_ppa=$out_path/$out_name\_$c
   echo "started with $outfile_ppa and D=$c"

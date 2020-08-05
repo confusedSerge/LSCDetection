@@ -1,4 +1,4 @@
-lang=("GER" "ENG")
+lang=("GER")
 comb=("VI-VI" "NO-VI" "OP-OP" "NO-NO" "WI")
 
 for i in "${lang[@]}" 

@@ -3,17 +3,17 @@ dim=$2
 
 sed -i 's/\s/;/g' $matrix
 
+IFS=";" read -ra line <<< $(head -n 1 $matrix)
+
 path=$(dirname $matrix)
 name=$(basename $matrix ".csv")
 outfile=$path/$name\_cleaned.csv
-c=0
 
-while IFS=";" read -ra line
+for ((c=0; c<=25; c++))
 do
     len=${#line[@]}
-	echo "$dim;$c;${line[@]:2:len}" >> $outfile
-    ((c=c+1))
-done <"$matrix"
+	echo "$dim;$c;${line[@]:1:len}" >> $outfile
+done 
 
 sed -i 's/\s/;/g' $outfile
 sed -i 's/[-+]0.000000j//g' $outfile 
