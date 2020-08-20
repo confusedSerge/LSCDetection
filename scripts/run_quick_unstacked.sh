@@ -18,10 +18,10 @@ do
   outfile_ppa_2=$out_path/sec_$out_name\_unstacked_$c
 
   echo "started with $outfile_ppa_1 and D=$c"
-  python3.7 postprocessing/ppa.py $matrix_1 $outfile_ppa_1 $c
+  python3.8 postprocessing/ppa.py $matrix_1 $outfile_ppa_1 $c
 
   echo "started with $outfile_ppa_2 and D=$c"
-  python3.7 postprocessing/ppa.py $matrix_2 $outfile_ppa_2 $c
+  python3.8 postprocessing/ppa.py $matrix_2 $outfile_ppa_2 $c
 
   outfile_stacked=$out_path/tmp_stacked_$out_name
   bash -e scripts/make_conc.sh $outfile_ppa_1 $outfile_ppa_2 $outfile_stacked
@@ -31,7 +31,7 @@ do
   sed -i 1d $outfile_stacked
   sed -i "1s/^/$i ${arr[2]}\n/" $outfile_stacked
   
-  output=$(python3.7 evaluation/test_statistik_diachron.py $outfile_stacked $outfile_stacked $task2 $wordsim $freq)
+  output=$(python3.8 evaluation/test_statistik_diachron.py $outfile_stacked $outfile_stacked $task2 $wordsim $freq)
   echo "$c;$output" >> $out_path/results_unstacked_$out_name.csv
 
   rm -f $outfile_ppa_1
