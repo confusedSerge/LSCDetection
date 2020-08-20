@@ -20,10 +20,10 @@ do
   outfile_ppa=$out_path/$out_name\_stacked_$c
 
   echo "started with $outfile_ppa and D=$c"
-  header=$(sed -n 1p $outfile_stacked)
+  # header=$(sed -n 1p $outfile_stacked)
   python3.7 postprocessing/ppa.py $outfile_stacked $outfile_ppa $c
-  sed -i 1d $outfile_ppa
-  sed -i "1s/^/$header\n/" $outfile_ppa
+  # sed -i 1d $outfile_ppa
+  # sed -i "1s/^/$header\n/" $outfile_ppa
 
   output=$(python3.7 evaluation/test_statistik_diachron.py $outfile_ppa $outfile_ppa $task2 $wordsim $freq)
   echo "$c;$output" >> $out_path/results_stacked_$out_name.csv
