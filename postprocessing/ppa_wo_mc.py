@@ -1,10 +1,11 @@
-from utils_ import Space
-import time
-import logging
-from docopt import docopt
 import sys
 
 sys.path.append('./modules/')
+
+from docopt import docopt
+import logging
+import time
+from utils_ import Space
 
 
 def main():
