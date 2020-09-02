@@ -18,9 +18,10 @@ def main():
 
 
     Usage:
-        plot.py (-z) <file_path> <base_perf> [(-t <third_optional>)] [<title> <name1> <name2>]
+        plot.py (-z) <outpath> <file_path> <base_perf> [(-t <third_optional>)] [<title> <name1> <name2> <xlabel> <ylabel>]
 
     Arguments:
+        <outpath> = outpath
         <file_path> = path to data_points
         <base_perf> = basis performance data point/s
         <third_optional> = optional
@@ -47,9 +48,9 @@ def main():
         if args['--three']:
             df = pd.read_csv(args['<third_optional>'], delimiter=';', header=None)
             _third = [tuple(x) for x in df.values]
-            plot2dthree(tuples, base_tupel, _third, args["<title>"], args["<name1>"], args["<name2>"])
+            plot2dthree(tuples, base_tupel, _third, args["<title>"], args["<name1>"], args["<name2>"], args["<xlabel>"], args["<ylabel>"], args["<outpath>"])
         else:
-            plot2d(tuples, base_tupel, args["<title>"], args["<name1>"], args["<name2>"])
+            plot2d(tuples, base_tupel, args["<title>"], args["<name1>"], args["<name2>"], args["<xlabel>"], args["<ylabel>"], args["<outpath>"])
 
     elif args['--three']:
         df = pd.read_csv(args['<third_optional>'], delimiter=';', header=None)
@@ -80,29 +81,44 @@ def plt_ppa_three_fig(_first, _sec, _thrid):
 
     plt.show()
 
-def plot2d(_first, _sec, title, name1, name2):
+def plot2d(_first, _sec, title, name1, name2, x_label, y_label, outpath):
     x, y, z = zip(*_first)
     x_, y_, z_ = zip(*_sec)
+
+    plt.ylim((0, 1))
+    if scale_check(z) or scale_check(z_):
+        plt.ylim((-1, 1))
     
     plt.plot(y, z, color='c')
-    plt.plot(y_, z_, color='m')
-    # plt.legend()
+    plt.plot(y_, z_, color='m', label="baseline")
+    plt.legend()
     plt.title(title)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
     plt.grid()
-    plt.show()
+    # plt.show()
+    plt.savefig(outpath)
 
-def plot2dthree(_first, _sec, _third, title, name1, name2):
+def plot2dthree(_first, _sec, _third, title, name1, name2, x_label, y_label, outpath):
     x, y, z = zip(*_first)
     x_, y_, z_ = zip(*_sec)
     x__, y__, z__ = zip(*_third)
     
+
+    plt.ylim((0, 1))
+    if scale_check(z) or scale_check(z_) or scale_check(z__):
+        plt.ylim((-1, 1))
+
     plt.plot(y, z, color='c', label=str(name1))
     plt.plot(y_, z_, color='m', label=str(name2))
     plt.plot(y__, z__, color='g', label="baseline")
     plt.legend()
     plt.title(title)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
     plt.grid()
-    plt.show()
+    # plt.show()
+    plt.savefig(outpath)
 
 def _gen_data(_tuple, base_perf):
     X = np.array([])
@@ -129,6 +145,11 @@ def _gen_data(_tuple, base_perf):
     X, Y = np.meshgrid(X, Y)
     return X, Y, Z, base_Z, scatter_Z
 
+def scale_check(arr: list):
+    for i in arr:
+        if i < 0:
+            return True
+    return False
 
 if __name__ == '__main__':
     main()
