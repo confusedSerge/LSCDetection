@@ -1,5 +1,5 @@
-lang=("GER")
-comb=("VI-VI" "NO-VI" "OP-OP" "NO-NO" "WI")
+lang=("GER" "ENG")
+comb=("VI-VI" "NO-VI" "OP-OP" "NO-NO")
 
 for i in "${lang[@]}" 
 do

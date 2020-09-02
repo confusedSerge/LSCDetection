@@ -190,6 +190,18 @@ class Space(object):
         _sum = csr_matrix(csr_matrix(self.matrix * pca_components.transpose()) * pca_components)
         self.matrix = csr_matrix(mean_matrix - _sum)
 
+    def ppa_wo_mc(self, threshold: int):
+        """
+        PPA without mean centering
+        """
+        pca = PCA(n_components=threshold)
+
+        pca.fit_transform(self.matrix.toarray())
+        pca_components = csr_matrix(pca.components_)
+
+        _sum = csr_matrix(csr_matrix(self.matrix * pca_components.transpose()) * pca_components)
+        self.matrix = csr_matrix(self.matrix - _sum)
+
     def algo_n(self, new_dim: int, threshold: int):
         """
         """
