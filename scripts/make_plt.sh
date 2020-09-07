@@ -6,7 +6,7 @@ title=$5
 
 mkdir -p $out/$title
 
-label=(wordsim frequency isotropy len_centroid)
+label=(wordsim frequency isotropy isotropy_norm len_centroid len_centroid_norm)
 
 for i in "${label[@]}"
 do

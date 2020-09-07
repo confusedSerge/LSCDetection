@@ -38,42 +38,42 @@ def main():
 
     # var reservation
     # var for src
-    performance = []
-    performance_low_c1 = []
-    performance_low_c2 = []
-    performance_high_c1 = []
-    performance_high_c2 = []
+    performance = np.array([])
+    performance_low_c1 = np.array([])
+    performance_low_c2 = np.array([])
+    performance_high_c1 = np.array([])
+    performance_high_c2 = np.array([])
 
     # var for baseline
-    base_performance = []
-    base_performance_low_c1 = []
-    base_performance_low_c2 = []
-    base_performance_high_c1 = []
-    base_performance_high_c2 = []
+    base_performance = np.array([])
+    base_performance_low_c1 = np.array([])
+    base_performance_low_c2 = np.array([])
+    base_performance_high_c1 = np.array([])
+    base_performance_high_c2 = np.array([])
 
     # read files from directory
     for file in glob.glob("{}/*.csv".format(src_path)):
         f_open = open(file, 'r')
 
-        tmp_performance = []
-        tmp_performance_low_c1 = []
-        tmp_performance_high_c1 = []
-        tmp_performance_low_c2 = []
-        tmp_performance_high_c2 = []
+        tmp_performance = np.array([])
+        tmp_performance_low_c1 = np.array([])
+        tmp_performance_high_c1 = np.array([])
+        tmp_performance_low_c2 = np.array([])
+        tmp_performance_high_c2 = np.array([])
 
         for lines in f_open.readlines():
             values = lines.split(';')
-            tmp_performance.append(float(values[2]))
-            tmp_performance_low_c1.append(float(values[3]))
-            tmp_performance_low_c2.append(float(values[4]))
-            tmp_performance_high_c1.append(float(values[5]))
-            tmp_performance_high_c2.append(float(values[6]))
+            np.append(tmp_performance, float(values[2]))
+            np.append(tmp_performance_low_c1, float(values[3]))
+            np.append(tmp_performance_low_c2, float(values[4]))
+            np.append(tmp_performance_high_c1, float(values[5]))
+            np.append(tmp_performance_high_c2, float(values[6]))
 
-        performance.append(tmp_performance)
-        performance_low_c1.append(tmp_performance_low_c1)
-        performance_low_c2.append(tmp_performance_low_c2)
-        performance_high_c1.append(tmp_performance_high_c1)
-        performance_high_c2.append(tmp_performance_high_c2)
+        np.append(performance, tmp_performance)
+        np.append(performance_low_c1, tmp_performance_low_c1)
+        np.append(performance_low_c2, tmp_performance_low_c2)
+        np.append(performance_high_c1, tmp_performance_high_c1)
+        np.append(performance_high_c2, tmp_performance_high_c2)
 
         f_open.close()
 
@@ -81,11 +81,11 @@ def main():
         f_open = open(file, 'r')
 
         values = f_open.readline().split(';')
-        base_performance.append(float(values[2]))
-        base_performance_low_c1.append(float(values[3]))
-        base_performance_low_c2.append(float(values[4]))
-        base_performance_high_c1.append(float(values[5]))
-        base_performance_high_c2.append(float(values[6]))
+        np.append(base_performance, float(values[2]))
+        np.append(base_performance_low_c1, float(values[3]))
+        np.append(base_performance_low_c2, float(values[4]))
+        np.append(base_performance_high_c1, float(values[5]))
+        np.append(base_performance_high_c2, float(values[6]))
 
         f_open.close()
 
@@ -102,33 +102,33 @@ def main():
 
     print()
 
-    print("mean ppa performance fixed param:\n{}".format(
+    print("mean ppa performance fixed param: {}".format(
         calc_fixed_param_mean(performance)))
-    print("mean ppa performance low c1 fixed param:\n{}".format(
+    print("mean ppa performance low c1 fixed param: {}".format(
         calc_fixed_param_mean(performance_low_c1)))
-    print("mean ppa performance low c2 fixed param:\n{}".format(
+    print("mean ppa performance low c2 fixed param: {}".format(
         calc_fixed_param_mean(performance_low_c2)))
-    print("mean ppa performance high c1 fixed param:\n{}".format(
+    print("mean ppa performance high c1 fixed param: {}".format(
         calc_fixed_param_mean(performance_high_c1)))
-    print("mean ppa performance high c2 fixed param:\n{}".format(
+    print("mean ppa performance high c2 fixed param: {}".format(
         calc_fixed_param_mean(performance_high_c2)))
-    print("mean ppa performance fixed param diff baseline:\n{}".format(
+    print("mean ppa performance fixed param diff baseline: {}".format(
         np.subtract(calc_fixed_param_mean(performance), calc_mean(base_performance))))
-    print("mean ppa performance low c1 fixed param diff baseline:\n{}".format(
+    print("mean ppa performance low c1 fixed param diff baseline: {}".format(
         np.subtract(calc_fixed_param_mean(performance_low_c1), calc_mean(base_performance))))
-    print("mean ppa performance low c2 fixed param diff baseline:\n{}".format(
+    print("mean ppa performance low c2 fixed param diff baseline: {}".format(
         np.subtract(calc_fixed_param_mean(performance_low_c2), calc_mean(base_performance))))
-    print("mean ppa performance high c1 fixed param diff baseline:\n{}".format(
+    print("mean ppa performance high c1 fixed param diff baseline: {}".format(
         np.subtract(calc_fixed_param_mean(performance_high_c1), calc_mean(base_performance))))
-    print("mean ppa performance high c2 fixed param diff baseline:\n{}".format(
+    print("mean ppa performance high c2 fixed param diff baseline: {}".format(
         np.subtract(calc_fixed_param_mean(performance_high_c2), calc_mean(base_performance))))
 
     # logging time
     logging.info("--- %s seconds ---" % (time.time() - start_time))
 
 
-def calc_argmax(values) -> float:
-    # values = stupid_conversion(values)
+def calc_argmax(values: List[List[int]]) -> float:
+    print(values)
     return np.mean(np.argmax(values, axis=1))
 
 
@@ -136,20 +136,20 @@ def calc_mean(values) -> float:
     return np.mean(values)
 
 
-def calc_max_mean(values) -> float:
+def calc_max_mean(values: List[List[int]]) -> float:
     return np.mean(np.max(values, axis=1))
 
 
-def calc_fixed_param_mean(values) -> float:
+def calc_fixed_param_mean(values: List[List[int]]) -> float:
     return np.mean(values, axis=0)
 
-def mode_argmax(values) -> dict:
+def mode_argmax(values: List[List[int]]) -> dict:
     dict_ = {}
 
     val = np.argmax(values, axis=1)    
 
     for i in val:
-            dict_[i] = dict_.get(i, 0) + 1
+            dict_(i, dict_.get(i, 0) + 1)
 
     return dict_
 
