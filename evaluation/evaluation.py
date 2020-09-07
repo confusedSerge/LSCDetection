@@ -95,13 +95,6 @@ def main():
 
     print()
 
-    print("mean ppa performance: {}".format(calc_mean(performance)))
-    print("mean base performance: {}".format(calc_mean(base_performance)))
-    print("mean performance diff: {}".format(
-        calc_mean(performance) - calc_mean(base_performance)))
-
-    print()
-
     print("mean ppa max performance: {}".format(calc_max_mean(performance)))
     print("mean base performance: {}".format(calc_mean(base_performance)))
     print("mean performance diff: {}".format(
