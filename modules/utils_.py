@@ -3,7 +3,6 @@ from scipy.sparse import csr_matrix, load_npz, save_npz, spdiags, linalg
 from sklearn.decomposition import PCA
 import numpy as np
 import logging
-import copy
 
 class Space(object):
     """
